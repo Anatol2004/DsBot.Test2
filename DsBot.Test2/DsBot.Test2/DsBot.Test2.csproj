@@ -142,8 +142,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="commands\TestCommands.cs" />
     <Compile Include="config\JSONReader.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

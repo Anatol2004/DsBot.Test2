@@ -1,11 +1,12 @@
-﻿using DsBot.Test2.config;
+﻿using DsBot.Test2.commands;
+using DsBot.Test2.config;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using System.Threading.Tasks;
 
 namespace DsBot.Test2
 {
-    internal class Program
+    internal class main
     {
 
         public static DiscordClient Client { get; set; }
@@ -27,6 +28,17 @@ namespace DsBot.Test2
 
             Client = new DiscordClient(discordConfig);
             Client.Ready += Client_Ready;
+
+            var commandsConfig = new CommandsNextConfiguration()
+            {
+                StringPrefixes = new[] { jsonReader.prefix },
+                EnableMentionPrefix = true,
+                EnableDms = true,
+                EnableDefaultHelp = false
+            };
+
+            Commands = Client.UseCommandsNext(commandsConfig);
+            Commands.RegisterCommands<TestCommands>();
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
