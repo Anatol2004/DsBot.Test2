@@ -13,6 +13,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DsBot.Test2.commands.slach;
+using DsBot.Test2.commands.slash;
 
 namespace DsBot.Test2
 {
@@ -62,6 +63,7 @@ namespace DsBot.Test2
 
             var slachCommandsConfig = Client.UseSlashCommands();
             slachCommandsConfig.RegisterCommands<BasicSlashCommands>();
+            slachCommandsConfig.RegisterCommands<Calculator>();
 
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<TestCommands>();
