@@ -11,6 +11,8 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
+using DsBot.Test2.commands.slach;
 
 namespace DsBot.Test2
 {
@@ -57,6 +59,9 @@ namespace DsBot.Test2
                 EnableDms = true,
                 EnableDefaultHelp = false
             };
+
+            var slachCommandsConfig = Client.UseSlashCommands();
+            slachCommandsConfig.RegisterCommands<BasicSlashCommands>();
 
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<TestCommands>();
