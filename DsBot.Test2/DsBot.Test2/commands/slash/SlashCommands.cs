@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using System.Threading.Tasks;
 
@@ -56,6 +57,23 @@ namespace DsBot.Test2.commands.slach
             };
 
             await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(embedMessage));
+        }
+
+        [SlashCommand(name: "кнопка", description: "обычная слеш-команда с кнопкой")]
+        public async Task ButtonCommand(InteractionContext ctx)
+        {
+            await ctx.DeferAsync();
+
+            var button1 = new DiscordButtonComponent(ButtonStyle.Primary, "testButton1", "Test Button 1");
+            var button2 = new DiscordButtonComponent(ButtonStyle.Danger, "testButton2", "Test Button 2");
+
+            var embedMessage = new DiscordEmbedBuilder()
+            {
+                Title = "Button Command",
+                Color = DiscordColor.Blue
+            };
+
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(embedMessage).AddComponents(button1, button2));
         }
     }
 } 

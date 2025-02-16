@@ -48,9 +48,10 @@ namespace DsBot.Test2
                 Timeout = TimeSpan.FromMinutes(2)
             });
 
-
+             
             Client.Ready += Client_Ready;
             Client.MessageDeleted += Client_Message_Deleted;
+            Client.ComponentInteractionCreated += Client_ComponentInteractionCreated;
 
 
             var commandsConfig = new CommandsNextConfiguration()
@@ -73,6 +74,59 @@ namespace DsBot.Test2
             await Client.ConnectAsync();
             await StartVideoUploadCheck();
             await Task.Delay(-1);
+        }
+
+        private static async Task Client_ComponentInteractionCreated(DiscordClient sender, ComponentInteractionCreateEventArgs args)
+        {
+            switch (args.Interaction.Data.CustomId)
+            {
+                case "testButton1":
+
+                    await args.Interaction.DeferAsync();
+
+                    var embedMessage = new DiscordEmbedBuilder()
+                    {
+                        Title = "Test Button 1",
+                        Color = DiscordColor.Green
+                    };
+
+                    await args.Interaction.EditOriginalResponseAsync(new DiscordWebhookBuilder().AddEmbed(embedMessage));
+
+                    break;
+
+
+                case "testButton2":
+
+                    var button = new DiscordButtonComponent(ButtonStyle.Danger, "back", "back");
+
+                    var embedMessage2 = new DiscordEmbedBuilder()
+                    {
+                        Title = "Test Button 2",
+                        Color = DiscordColor.Red
+                    };
+
+                    await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, new DiscordInteractionResponseBuilder().AddEmbed(embedMessage2).AddComponents(button));
+
+                    break;
+
+
+                case "back":
+
+                    var button1 = new DiscordButtonComponent(ButtonStyle.Primary, "testButton1", "Test Button 1");
+                    var button2 = new DiscordButtonComponent(ButtonStyle.Danger, "testButton2", "Test Button 2");
+
+                    var embedMessage3  = new DiscordEmbedBuilder()
+                    {
+                        Title = "Button Command",
+                        Color = DiscordColor.Blue
+                    };
+
+                    await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, 
+                        new DiscordInteractionResponseBuilder().AddEmbed(embedMessage3).
+                        AddComponents(button1, button2));
+
+                    break;
+            };
         }
 
         private static async Task On_Command_Errored(CommandsNextExtension sender, CommandErrorEventArgs args)
