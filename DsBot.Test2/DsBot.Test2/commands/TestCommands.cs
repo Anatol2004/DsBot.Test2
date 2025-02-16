@@ -2,12 +2,37 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Extensions;
 using System.Threading.Tasks;
 
 namespace DsBot.Test2.commands
 {
     public class TestCommands : BaseCommandModule
     {
+        [Command("interect")]
+        public async Task Interact(CommandContext ctx)
+        {
+            var interactivity = main.Client.GetInteractivity();
+
+            var messageToRecive = await interactivity.WaitForMessageAsync(message => message.Content == "Привет");
+            if (messageToRecive.Result.Content == "Привет")
+            {
+                await ctx.Channel.SendMessageAsync($"{ctx.User.Username} сказал привет.");
+            }
+        }
+
+        [Command("emoji")]
+        public async Task Emoji(CommandContext ctx)
+        {
+            var interactivity = main.Client.GetInteractivity();
+
+            var messageToReact = await interactivity.WaitForReactionAsync(message => message.Message.Id == 1340587914710487062);
+            if (messageToReact.Result.Message.Id == 1340587914710487062)
+            {
+                await ctx.Channel.SendMessageAsync($"{ctx.User.Username} поставил реакцию {messageToReact.Result.Emoji.Name}.");
+            }
+        }
+
         [Command("hello")]
         public async Task Hello(CommandContext ctx)
         {

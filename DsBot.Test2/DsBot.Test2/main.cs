@@ -3,12 +3,10 @@ using DsBot.Test2.config;
 using DsBot.Test2.YouTube;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using System.Data;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using Timer = System.Timers.Timer;
 using System;
+using DSharpPlus.Interactivity.Extensions;
 
 namespace DsBot.Test2
 {
@@ -37,6 +35,12 @@ namespace DsBot.Test2
             };
 
             Client = new DiscordClient(discordConfig);
+
+            Client.UseInteractivity(new DSharpPlus.Interactivity.InteractivityConfiguration()
+            {
+                Timeout = TimeSpan.FromMinutes(2)
+            });
+
             Client.Ready += Client_Ready;
 
             var commandsConfig = new CommandsNextConfiguration()
@@ -84,7 +88,7 @@ namespace DsBot.Test2
                 }
             };
 
-            timer.Start();
+            timer.Stop(); // ОСТАНОВИЛ ОПОВЕЩЕНИЯ ЮТУБ
         }
     }
 }
