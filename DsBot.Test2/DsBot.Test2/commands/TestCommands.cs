@@ -35,7 +35,7 @@ namespace DsBot.Test2.commands
 
         [Command("hello")]
         [Cooldown(3, 10, CooldownBucketType.User)]
-        [RequireRoles(RoleCheckMode.Any, new string[] {"VIP-участник"}]
+        [RequireRoles(RoleCheckMode.Any, roleNames: new string[] {"VIP"})]
         public async Task Hello(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync("Привет!");

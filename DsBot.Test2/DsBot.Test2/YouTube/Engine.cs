@@ -9,7 +9,6 @@ namespace DsBot.Test2.YouTube
         private string _apiKey = "AIzaSyDNm_lkD9d-GKpaPJNlcaYuJ9mwSoSOdeg";
         private string _channelID = "UCFdqrWOD23vJhVSK0_N8Cig";
 
-        private youtubeVideo _video;
 
         public youtubeVideo GetLatestVideo()
         {
