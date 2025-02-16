@@ -87,8 +87,11 @@ namespace DsBot.Test2
                             Color = DiscordColor.Red
                         };
 
+
                         await args.Context.Channel.SendMessageAsync(embed: coolDownMessage);
-                    } else if (check is RequireRolesAttribute role)
+                    }
+                    
+                    else if (check is RequireRolesAttribute role)
                     {
                         roleName = role.RoleNames[0];
 
@@ -98,17 +101,10 @@ namespace DsBot.Test2
                             Description = $"У вас нет роли {roleName}",
                             Color = DiscordColor.Red
                         };
+
+                        await args.Context.Channel.SendMessageAsync(embed: roleMessage);
                     }
                 }
-
-                var cooldownMessage = new DiscordEmbedBuilder()
-                {
-                    Title = "Ошибка",
-                    Description = $"Подождите {timeLeft}",
-                    Color = DiscordColor.Red
-                };
-
-                await args.Context.Channel.SendMessageAsync(embed: cooldownMessage);
             }
         }
 
