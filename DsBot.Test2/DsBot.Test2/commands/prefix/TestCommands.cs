@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace DsBot.Test2.commands
 {
+    // ДАННЫЙ КЛАСС СОДЕРЖИТ ПРЕФИКСНЫЕ КОМАНДЫ БОТА
     public class TestCommands : BaseCommandModule
     {
+        // ПРЕФИКСНАЯ КОМАНДА "interect" -----------------------------------------------------------------------------
+        // Если сообщение содержит "привет", бот отправляет ответ с упоминанием пользователя.
         [Command("interect")]
         public async Task Interact(CommandContext ctx)
         {
@@ -19,8 +22,12 @@ namespace DsBot.Test2.commands
             {
                 await ctx.Channel.SendMessageAsync($"{ctx.User.Username} сказал привет.");
             }
-        }
+        }//------------------------------------------------------------------------------------------------------------
 
+
+
+        // ПРЕФИКСНАЯ КОМАНДА "emoji" --------------------------------------------------------------------------------------------
+        // Если пользователь под конкретное сообщение поставит реацию, то бот об этом напишет
         [Command("emoji")]
         public async Task Emoji(CommandContext ctx)
         {
@@ -31,23 +38,31 @@ namespace DsBot.Test2.commands
             {
                 await ctx.Channel.SendMessageAsync($"{ctx.User.Username} поставил реакцию {messageToReact.Result.Emoji.Name}.");
             }
-        }
+        }//-----------------------------------------------------------------------------------------------------------------------
+            
 
+
+        // ПРЕФИКСНАЯ КОМАНДА "hello"------------------------------------------------------------------------------------
+        // После ввода команды бот отправляет "Привет!" в виде сообщения.
+        // Эту команду можно использовать 3 раза за 10 секунд, и могут воспользоваться пользователи с ролью "VIP"
         [Command("hello")]
         [Cooldown(3, 10, CooldownBucketType.User)]
         [RequireRoles(RoleCheckMode.Any, roleNames: new string[] {"VIP"})]
         public async Task Hello(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync("Привет!");
-        }
+        }//--------------------------------------------------------------------------------------------------------------
 
 
+
+        // ПРЕФИКСНАЯ КОМАНДА "random"--------------------------------------------------
+        // Команда генерирует число в указанном диапозоне
         [Command("random")]
         public async Task Random(CommandContext ctx, int min, int max)
         {
             var randomValue = new System.Random().Next(min, max);
             await ctx.Channel.SendMessageAsync(ctx.User.Username + " " + randomValue);
-        }
+        }//
 
 
         [Command("embed")]
